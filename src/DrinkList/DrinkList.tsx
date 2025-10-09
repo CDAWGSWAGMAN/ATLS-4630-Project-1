@@ -11,7 +11,8 @@ export default function DrinkList({drinkResultList}: DrinkListProps){
         <div className="DrinkListContainer">
             {
                 drinkResultList.map(drink =>
-                    <ListItem drink={drink}/>
+                    <ListItem drink={drink} key={drink.idDrink}/>,
+
                 )
             }
         </div>
