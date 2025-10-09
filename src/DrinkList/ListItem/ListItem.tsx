@@ -21,8 +21,8 @@ export default function ListItem({drink}:ListItemProps){
             </div>
             <div className="DrinkIngredients">
                 <h3>Ingredients</h3>
-                {drink.ingredients.map( ingredient =>
-                    <div className="DrinkIngredientInfo">
+                {drink.ingredients.map( (ingredient, index) =>
+                    <div className="DrinkIngredientInfo" key={index}>
                         <span><strong>{ingredient.name}</strong></span>
                         <span>{ingredient.measure}</span>
                     </div>
