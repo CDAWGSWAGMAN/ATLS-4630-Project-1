@@ -1,0 +1,115 @@
+.DrinkContainer{
+    width: 80%;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: row;
+
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 32px;
+
+    padding: 16px;
+    border-radius: 32px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #222;
+    background-color: white;
+
+    color: #222;
+}
+
+.DrinkContainer h2, h3{
+    margin-top: 0;
+}
+
+.DrinkContainer img{
+    /* aspect-ratio: 1/1; */
+    height: 100%;
+    max-width: 300px;
+    max-height: 300px;
+    border-radius: 16px;
+
+    align-self: flex-start;
+}
+
+.DrinkInfo{
+    flex-grow: 1;
+}
+
+.DrinkInfo h3{
+    font-size: 1em;
+    margin:0;
+}
+
+.DrinkInfo p{
+    margin: 0;
+}
+
+
+.DrinkIngredients{
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    /* align-self: flex-end; */
+    gap: 8px;
+}
+
+.DrinkIngredientInfo{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap:16px;
+
+    padding: 4px;
+    border-radius: 4px;
+
+    background-color: #eee;
+
+}
+
+.DrinkUserActionsContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+}
+
+
+/* BUTTON STYLING */
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+  color: white;
+}
+button:hover {
+  border-color: #646cff;
+  background-color: #666;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+
+@media (max-width:1100px){
+
+    .DrinkContainer img{
+        align-self: center;
+    }
+
+    .DrinkContainer{
+        flex-direction: column;
+        align-items: center;
+    }
+    .DrinkUserActionsContainer{
+        flex-direction: row;
+    }
+}
