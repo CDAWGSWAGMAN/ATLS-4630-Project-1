@@ -1,6 +1,8 @@
 // import { useState } from 'react'
 import './App.css'
 import DrinkList from '../DrinkList/DrinkList'
+import ShoppingCart from '../ShoppingCart/ShoppingCart'
+
 
 export type Ingredient = {
     name: string,
@@ -44,11 +46,14 @@ function App() {
     },
   ];
 
-  return(
+  return (
     <div className="App">
-      <DrinkList drinkResultList={drinkResultList}/>
+      {/* your header/search would go here */}
+      <DrinkList drinkResultList={drinkResultList} />
+      <ShoppingCart /> {/* static overlay always visible for now */}
     </div>
-  )
+  );
 }
 
 export default App
+
