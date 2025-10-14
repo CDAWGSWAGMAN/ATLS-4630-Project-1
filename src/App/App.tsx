@@ -2,6 +2,8 @@
 import './App.css'
 import DrinkList from '../DrinkList/DrinkList'
 import ShoppingCart from '../ShoppingCart/ShoppingCart'
+import SearchFilter from '../SearchFilter/SearchFilter'
+
 
 
 export type Ingredient = {
@@ -48,7 +50,13 @@ function App() {
 
   return (
     <div className="App">
-      {/* your header/search would go here */}
+
+      <div className="TitleandCart"> 
+        <h1>Cocktail App</h1>
+        <button>Cart</button>
+      </div>
+      
+      <SearchFilter />
       <DrinkList drinkResultList={drinkResultList} />
       <ShoppingCart /> {/* static overlay always visible for now */}
     </div>
