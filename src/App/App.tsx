@@ -22,8 +22,6 @@ export type Drink = {
 
 
 
-
-
 function App() {
 
   //This is just Test Data for the static site - will be replaced once we implement state
