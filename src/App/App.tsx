@@ -1,5 +1,6 @@
 // import { useState } from 'react'
 import './App.css'
+import { useState } from 'react'
 import DrinkList from '../DrinkList/DrinkList'
 import ShoppingCart from '../ShoppingCart/ShoppingCart'
 import SearchFilter from '../SearchFilter/SearchFilter'
@@ -26,27 +27,58 @@ export type Drink = {
 
 function App() {
 
-  //This is just Test Data for the static site - will be replaced once we implement state
-  const drinkResultList = [
-    {
-        idDrink: "17253",
-        strDrink: "Paloma",
-        strInstructions: `Straight: Pour all ingredients into mixing glass with ice cubes. Stir well. Strain in chilled martini cocktail glass. Squeeze oil from lemon peel onto the drink, or garnish with olive.`,
-        strDrinkThumb: "https://www.thecocktaildb.com/images/media/drink/samm5j1513706393.jpg",
-        strGlass: "Collins Glass",
-        ingredients:[
-            {
-                name: "Grape Soda",
-                measure:"3 oz"
-            },
-            {
-                name: "Tequila",
-                measure:"1 1/2 oz"
-            },
-        ],
-        
-    },
-  ];
+  const [drinkResultList, setDrinkResultList] = useState<Drink[]>([]);
+  const [favorites, setFavorites] = useState<string[]>([])
+
+  async function getDrinkResultsFromSearch(searchTerm:string, showFavorites:Boolean, showAlcoholicDrinks:boolean, showNonAlcoholicDrinks:boolean ){
+
+    // searchTerm = "margarita"
+    const response = await fetch(`https://thecocktaildb.com/api/json/v1/1/search.php?s=${searchTerm}`)
+    const json = await response.json()
+
+    console.log(json)
+    const drinks = json.drinks
+    if (!drinks){
+      console.log("No Drinks Found")
+    }
+
+    const newDrinks:Drink[] = []
+
+    for (const drink of drinks){
+
+      function getIngredients(){
+
+        const ingredients:Ingredient[] = []
+
+        for (let i = 1; i <= 15; i++){
+          const ingredientName = drink[`strIngredient${i}`];
+          const ingredientMeasure = drink[`strMeasure${i}`]
+          if(!ingredientName){break}
+          else{
+            const newIngredient:Ingredient = {
+              name:ingredientName,
+              measure: ingredientMeasure
+            }
+            ingredients.push(newIngredient)
+          }
+        }
+
+        return ingredients;
+      }
+
+      const newDrink:Drink = {
+        idDrink: drink.idDrink,
+        strDrink: drink.strDrink,
+        strInstructions: drink.strInstructions,
+        strDrinkThumb: drink.strDrinkThumb,
+        ingredients: getIngredients(),
+        strGlass: drink.strGlass,
+      }
+      newDrinks.push(newDrink)
+      setDrinkResultList(newDrinks);
+    }
+
+  }
 
   return (
     <div className="App">
@@ -60,6 +92,7 @@ function App() {
       <DrinkList drinkResultList={drinkResultList} />
       <ShoppingCart /> {/* static overlay always visible for now */}
     </div>
+    
   );
 }
 
