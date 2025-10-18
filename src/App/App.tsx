@@ -1,4 +1,4 @@
-// import { useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 import { useState } from 'react'
 import DrinkList from '../DrinkList/DrinkList'
@@ -24,6 +24,21 @@ export type Drink = {
 
 
 function App() {
+
+  const[CartItems, setCartItems] = useState<string[]>([
+    "Tequila",
+    "Lime Juice",
+    "Triple Sec",
+    "Salt",
+  ]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const toggleClose=()=>{
+    setIsCartOpen(!isCartOpen)
+    }
+    const handleRemove = (name: string) =>
+    setCartItems((list) => list.filter((n) => n !== name));
+    const handleClear = () => setCartItems([]);
+   
 
   const [drinkResultList, setDrinkResultList] = useState<Drink[]>([]);
   const [favorites, setFavorites] = useState<string[]>([])
@@ -83,16 +98,17 @@ function App() {
 
       <div className="TitleandCart"> 
         <h1>Cocktail App</h1>
-        <button>Cart</button>
+        <button onClick={() => setIsCartOpen(true)}>Cart</button> 
       </div>
       
       <SearchFilter />
       <DrinkList drinkResultList={drinkResultList} />
-      <ShoppingCart /> {/* static overlay always visible for now */}
+       {isCartOpen && (
+          <ShoppingCart items={CartItems} toggleClose={toggleClose} handleClear={handleClear} handleRemove={handleRemove} />
+        )}
     </div>
     
   );
 }
 
 export default App
-
