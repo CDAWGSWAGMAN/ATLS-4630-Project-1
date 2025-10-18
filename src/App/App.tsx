@@ -23,8 +23,6 @@ export type Drink = {
 
 
 
-
-
 function App() {
 
   const [drinkResultList, setDrinkResultList] = useState<Drink[]>([]);
