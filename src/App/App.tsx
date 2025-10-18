@@ -1,4 +1,4 @@
-// import { useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 import DrinkList from '../DrinkList/DrinkList'
 import ShoppingCart from '../ShoppingCart/ShoppingCart'
@@ -23,6 +23,21 @@ export type Drink = {
 
 
 function App() {
+
+  const[CartItems, setCartItems] = useState<string[]>([
+    "Tequila",
+    "Lime Juice",
+    "Triple Sec",
+    "Salt",
+  ]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const toggleClose=()=>{
+    setIsCartOpen(!isCartOpen)
+    }
+    const handleRemove = (name: string) =>
+    setCartItems((list) => list.filter((n) => n !== name));
+    const handleClear = () => setCartItems([]);
+   
 
   //This is just Test Data for the static site - will be replaced once we implement state
   const drinkResultList = [
@@ -51,15 +66,16 @@ function App() {
 
       <div className="TitleandCart"> 
         <h1>Cocktail App</h1>
-        <button>Cart</button>
+        <button onClick={() => setIsCartOpen(true)}>Cart</button> 
       </div>
       
       <SearchFilter />
       <DrinkList drinkResultList={drinkResultList} />
-      <ShoppingCart /> {/* static overlay always visible for now */}
+       {isCartOpen && (
+          <ShoppingCart items={CartItems} toggleClose={toggleClose} handleClear={handleClear} handleRemove={handleRemove} />
+        )}
     </div>
   );
 }
 
 export default App
-
