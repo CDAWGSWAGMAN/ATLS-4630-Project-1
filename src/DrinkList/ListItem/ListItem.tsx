@@ -1,13 +1,24 @@
 import type { Drink } from "../../App/App";
+import UserActions from "./UserActions/UserActions";
+import { useEffect } from "react";
 import "./ListItem.css"
 
 
 type ListItemProps= {
     drink: Drink;
+    handleAdd: (name:string) => void,
+    toggleFavorite: (id: string) => void
 }
 
 
-export default function ListItem({drink}:ListItemProps){
+export default function ListItem({drink, handleAdd, toggleFavorite}:ListItemProps){
+
+
+    function addIngredients(){
+        for (const ingredient of drink.ingredients){
+           handleAdd(ingredient.name)
+        }
+    }
 
     return(
         <div className="DrinkContainer">
@@ -28,10 +39,7 @@ export default function ListItem({drink}:ListItemProps){
                     </div>
                 )}
             </div>
-            <div className="DrinkUserActionsContainer">
-                <button>Favorite</button>
-                <button>Add to Cart</button>
-            </div>
+            <UserActions isFavorite={drink.isFavorite} idDrink={drink.idDrink} toggleFavorite={toggleFavorite} addIngredients={addIngredients}/>
         </div>
     )
 }
