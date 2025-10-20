@@ -1,8 +1,12 @@
 import "./SearchFilter.css"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+
+type SearchFilterProps = {
+    getDrinkResultsFromSearch: (searchTerm:string, showFavoritesOnly:boolean, showAlcoholicDrinks:boolean, showNonAlcoholicDrinks:boolean, dropdownValue: string) => void;
+}
 
 
-export default function SearchFilter(){
+export default function SearchFilter({getDrinkResultsFromSearch}:SearchFilterProps){
     // const dropdownOptions = [
     //     {type: "Drink Names"},
     //     {type: "Ingredients"},
@@ -14,8 +18,8 @@ export default function SearchFilter(){
     const [dropdownIsOpen, setDropdownIsOpen] = useState(false)
     const [dropdownValue, setDropdownValue] = useState("")
     const [filterIsFavorites, setFilterIsFavorites] = useState(false)
-    const [filterIsAlcoholic, setFilterIsAlcoholic] = useState(false)
-    const [filterIsNonAlcoholic, setFilterIsNonAlcoholic] = useState(false)
+    const [filterIsAlcoholic, setFilterIsAlcoholic] = useState(true)
+    const [filterIsNonAlcoholic, setFilterIsNonAlcoholic] = useState(true)
 
 
     // below is from ChatGPT to have the "enter" functionality work for the input
@@ -46,6 +50,12 @@ export default function SearchFilter(){
     // }
 
     // printFilterValue()
+
+     useEffect(()=>{
+        if(inputValue){
+            getDrinkResultsFromSearch(inputValue, filterIsFavorites, filterIsAlcoholic, filterIsNonAlcoholic, dropdownValue);
+        }
+     }, [inputValue, filterIsAlcoholic, filterIsFavorites, filterIsNonAlcoholic, dropdownValue, getDrinkResultsFromSearch])
 
 
     return(

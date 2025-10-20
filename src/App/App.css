@@ -4,7 +4,11 @@
     justify-content: space-between;
     align-items: center;
     gap: 32px;
-    position: fixed;
+    position: sticky;
     width: 100%;
     top: 0px;
+}
+
+.App{
+    width: 100vw;
 }
