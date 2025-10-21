@@ -24,20 +24,23 @@
   font-size: 0.85rem;
 }
 
+
 .CartItem__remove {
-  appearance: none;
-  border: none;
-  background: #f8fafc;
-  border: 1px solid var(--cart-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 1;
+  padding: 0;
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  color: #b91c1c;
   width: 32px;
   height: 32px;
   border-radius: 10px;
-  font-size: 18px;
-  line-height: 1;
-  display: grid;
-  place-items: center;
   cursor: pointer;
   transition: background .15s ease, border-color .15s ease, transform .04s ease;
 }
-.CartItem__remove:hover { background: #f1f5f9; border-color: #d1d5db; }
+
+.CartItem__remove:hover { background: lightcoral; border-color: black; }
 .CartItem__remove:active { transform: translateY(1px); }

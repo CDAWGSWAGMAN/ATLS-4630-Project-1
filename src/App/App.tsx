@@ -26,10 +26,7 @@ export type Drink = {
 function App() {
 
   const[CartItems, setCartItems] = useState<string[]>([
-    "Tequila",
-    "Lime Juice",
-    "Triple Sec",
-    "Salt",
+    
   ]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [drinkResultList, setDrinkResultList] = useState<Drink[]>([]);
