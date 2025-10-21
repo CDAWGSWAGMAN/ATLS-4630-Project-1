@@ -1,9 +1,10 @@
 .SearchandFilter {
+    margin-block: 64px;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 24px;
     
 }
 

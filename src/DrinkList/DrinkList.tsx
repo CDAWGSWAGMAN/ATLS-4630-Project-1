@@ -12,10 +12,12 @@ export default function DrinkList({drinkResultList, handleAdd, toggleFavorite}: 
     return(
         <div className="DrinkListContainer">
             {
-                //For Every Drink In The Data, create a ListItem
-                drinkResultList.map(drink =>
-                    <ListItem drink={drink} key={drink.idDrink} handleAdd={handleAdd} toggleFavorite={toggleFavorite}/>,
-                )
+                //For Every Drink In The Data, create a ListItem, if there are no drinks found, prompt user to add search terms
+                drinkResultList.length !== 0?
+                    drinkResultList.map(drink =>
+                        <ListItem drink={drink} key={drink.idDrink} handleAdd={handleAdd} toggleFavorite={toggleFavorite}/>,
+                    ):
+                    "No Cocktails Found, Try A Different Search Term or Filters"
             }
         </div>
     )

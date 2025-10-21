@@ -43,7 +43,10 @@ function App() {
     setCartItems((list) => list.filter((n) => n !== name));
   const handleClear = () => setCartItems([]);
   
-  const handleAdd = (ingredient:string) => setCartItems((list)=> [...list, ingredient] )
+  const handleAdd = (ingredient:string) => setCartItems((list)=> {
+    if(list.includes(ingredient)){return list}
+    return [...list, ingredient] 
+  })
 
   //handles toggling whether a drink is in the favorites list
   const toggleFavorite = (id: string) =>{
@@ -55,24 +58,16 @@ function App() {
     }
   }
 
+// Handles getting the api results and setting the drinkresultlist - called in Search/Filter
   const getDrinkResultsFromSearch = useCallback(async (searchTerm:string, showFavoritesOnly:boolean, showAlcoholicDrinks:boolean, showNonAlcoholicDrinks:boolean, dropdownValue: string) => {
-
-    // const testDrink:Drink = {
-    //     idDrink: "1234",
-    //     strDrink: "Test Drink",
-    //     strInstructions: "drink it",
-    //     strDrinkThumb: "null",
-    //     ingredients: [],
-    //     strGlass: "Collins"
-    //   // }
     
-    // setDrinkResultList([testDrink]);
-    // return;
-    // if(showFavoritesOnly && !drinkResultList){
-    //   setDrinkResultList([])
-    // }
-    console.log(favorites)
+    //if search term is empty, dont bother sending any reqs
+    if(!searchTerm){
+      setDrinkResultList([]);
+      return;
+    }
 
+    //handle the different options for the drop down and different endpoints to hit
     let response: Response | null = null
     switch (dropdownValue){
       case ("Ingredients"):
@@ -87,8 +82,9 @@ function App() {
     
     const json = await response.json()
 
-    console.log(json)
     const drinks = json.drinks
+
+    //handle any issues where the drinks array is not found or there is no data found
     if (!drinks || drinks === "no data found"){
       setDrinkResultList([])
       console.log("No Drinks Found")
@@ -106,18 +102,19 @@ function App() {
 
       if(showFavoritesOnly && !favorites.includes(drink.idDrink)) {continue}
 
-      function getIngredients(){
+      //function to itemize the ingredients
+      function getIngredients(drinkData: Record<string, string|null>){
 
         const ingredients:Ingredient[] = []
 
         for (let i = 1; i <= 15; i++){
-          const ingredientName = drink[`strIngredient${i}`];
-          const ingredientMeasure = drink[`strMeasure${i}`]
+          const ingredientName = drinkData[`strIngredient${i}`];
+          const ingredientMeasure = drinkData[`strMeasure${i}`]
           if(!ingredientName){break}
           else{
             const newIngredient:Ingredient = {
               name:ingredientName,
-              measure: ingredientMeasure
+              measure: ingredientMeasure?ingredientMeasure:""
             }
             ingredients.push(newIngredient)
           }
@@ -127,17 +124,19 @@ function App() {
       }
 
       const newDrink:Drink = {
-        idDrink: drink.idDrink,
-        strDrink: drink.strDrink,
-        strInstructions: drink.strInstructions,
-        strDrinkThumb: drink.strDrinkThumb,
-        ingredients: getIngredients(),
-        strGlass: drink.strGlass,
-        isFavorite: favorites.includes(drink.idDrink)
+          idDrink: drink.idDrink,
+          strDrink: drink.strDrink,
+          strInstructions: drink.strInstructions,
+          strDrinkThumb: drink.strDrinkThumb,
+          ingredients: getIngredients(drink),
+          strGlass: drink.strGlass,
+          isFavorite: favorites.includes(drink.idDrink)
       }
+      //add to array
       newDrinks.push(newDrink)
-      console.log(newDrink.strDrink)
+      // console.log(newDrink.strDrink)
     }
+      //set the drink results to the new array
       setDrinkResultList(newDrinks);
 
   }, [favorites])

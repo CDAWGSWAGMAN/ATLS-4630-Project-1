@@ -51,10 +51,11 @@ export default function SearchFilter({getDrinkResultsFromSearch}:SearchFilterPro
 
     // printFilterValue()
 
+
+
      useEffect(()=>{
-        if(inputValue){
-            getDrinkResultsFromSearch(inputValue, filterIsFavorites, filterIsAlcoholic, filterIsNonAlcoholic, dropdownValue);
-        }
+        getDrinkResultsFromSearch(inputValue, filterIsFavorites, filterIsAlcoholic, filterIsNonAlcoholic, dropdownValue)
+
      }, [inputValue, filterIsAlcoholic, filterIsFavorites, filterIsNonAlcoholic, dropdownValue, getDrinkResultsFromSearch])
 
 
