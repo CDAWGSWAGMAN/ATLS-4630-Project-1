@@ -1,6 +1,5 @@
 import type { Drink } from "../../App/App";
 import UserActions from "./UserActions/UserActions";
-import { useEffect } from "react";
 import "./ListItem.css"
 
 
@@ -25,8 +24,10 @@ export default function ListItem({drink, handleAdd, toggleFavorite}:ListItemProp
             <img src={drink.strDrinkThumb}/>
             <div className="DrinkInfo">
                 <h2>{drink.strDrink}</h2>
-                <h3>Instructions</h3>
-                <p>{drink.strInstructions}</p>
+                <p>
+                    <strong>Instructions:</strong> <br/>
+                    {drink.strInstructions}
+                </p>
                 <br/>
                 <p><strong>Served: </strong>{drink.strGlass}</p>
             </div>
@@ -34,8 +35,8 @@ export default function ListItem({drink, handleAdd, toggleFavorite}:ListItemProp
                 <h3>Ingredients</h3>
                 {drink.ingredients.map( (ingredient, index) =>
                     <div className="DrinkIngredientInfo" key={index}>
-                        <span><strong>{ingredient.name}</strong></span>
-                        <span>{ingredient.measure}</span>
+                        <span className="IngredientName"><strong>{ingredient.name}</strong></span>
+                        <span className="IngredientMeasure">{ingredient.measure}</span>
                     </div>
                 )}
             </div>

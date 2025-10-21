@@ -1,5 +1,6 @@
 import "./SearchFilter.css"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import { debounce } from "lodash"
 
 type SearchFilterProps = {
     getDrinkResultsFromSearch: (searchTerm:string, showFavoritesOnly:boolean, showAlcoholicDrinks:boolean, showNonAlcoholicDrinks:boolean, dropdownValue: string) => void;
@@ -51,11 +52,18 @@ export default function SearchFilter({getDrinkResultsFromSearch}:SearchFilterPro
 
     // printFilterValue()
 
-     useEffect(()=>{
-        if(inputValue){
+
+    // Debounce code source - https://carlrippon.com/using-lodash-debounce-with-react-and-ts/
+    const debouncedSearch = useRef(
+        debounce(async (inputValue, filterIsFavorites, filterIsAlcoholic, filterIsNonAlcoholic, dropdownValue) => {
             getDrinkResultsFromSearch(inputValue, filterIsFavorites, filterIsAlcoholic, filterIsNonAlcoholic, dropdownValue);
-        }
-     }, [inputValue, filterIsAlcoholic, filterIsFavorites, filterIsNonAlcoholic, dropdownValue, getDrinkResultsFromSearch])
+        }, 300)
+    ).current;
+
+     useEffect(()=>{
+        debouncedSearch(inputValue, filterIsFavorites, filterIsAlcoholic, filterIsNonAlcoholic, dropdownValue)
+
+     }, [inputValue, filterIsAlcoholic, filterIsFavorites, filterIsNonAlcoholic, dropdownValue, getDrinkResultsFromSearch, debouncedSearch])
 
 
     return(
