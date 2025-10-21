@@ -34,7 +34,12 @@
 }
 
 .DrinkInfo{
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
+    max-width: 550px;
+    justify-content: space-between;
+
 }
 
 .DrinkInfo h3{
@@ -66,6 +71,10 @@
 
     background-color: #eee;
 
+}
+
+.IngredientMeasure{
+    text-align: right;
 }
 
 .DrinkUserActionsContainer{
