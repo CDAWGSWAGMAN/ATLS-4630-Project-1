@@ -25,6 +25,7 @@
   /* subtle slide-in feel even for static render */
   transform: translateZ(0);
   animation: cartIn .25s ease-out both;
+  z-index: 2;
 }
 
 @keyframes cartIn {

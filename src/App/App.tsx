@@ -43,7 +43,10 @@ function App() {
     setCartItems((list) => list.filter((n) => n !== name));
   const handleClear = () => setCartItems([]);
   
-  const handleAdd = (ingredient:string) => setCartItems((list)=> [...list, ingredient] )
+  const handleAdd = (ingredient:string) => setCartItems((list)=> {
+    if(list.includes(ingredient)){return list}
+    return [...list, ingredient] 
+  })
 
   //handles toggling whether a drink is in the favorites list
   const toggleFavorite = (id: string) =>{
